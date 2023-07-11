@@ -18,7 +18,9 @@ const Marker = () => {
         width: '8px',
         height: '8px',
         borderRadius: '50%',
-        background: 'red'
+        background: 'red',
+        borderColor: 'black',
+        borderWidth: 1
       }}
     />
   );

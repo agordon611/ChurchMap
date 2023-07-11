@@ -4,6 +4,8 @@ import { ref, set } from "firebase/database";
 import { db } from "../firebase.js";
 import "./Form.css";
 import axios from 'axios';
+import 'react-notifications/lib/notifications.css';
+import {NotificationContainer, NotificationManager} from 'react-notifications';
 
 function Form() {
 
@@ -15,7 +17,6 @@ function Form() {
     const [zipcode, setZipcode] = useState('');
     const [country, setCountry] = useState('');
     const [parish, setParish] = useState('');
-    const [coordinates, setCoordinates] = useState();
 
     function writeData(userId, firstName, lastName, email, city, state, zipcode, country, parish, lat, lng) {
         set(ref(db, 'visitors/' + userId), {
@@ -49,6 +50,7 @@ function Form() {
                 const lat = response.data.results[0].geometry.location.lat;
                 const lng = response.data.results[0].geometry.location.lng;
                 writeData(userId, firstName, lastName, email, city, state, zipcode, country, parish, lat, lng);
+                NotificationManager.success('Your data has been submitted successfully', 'Form Submission');
             }
         }).catch((error) => {
             console.error('Error occurred while geocoding address: ', error);
@@ -61,7 +63,6 @@ function Form() {
         setState('');
         setCountry('');
         setParish('');
-        setCoordinates();
     }
 
     return (
@@ -94,6 +95,8 @@ function Form() {
 
             <button type="submit"> Submit </button> 
         </form>
+
+        <NotificationContainer />
     </div>
   )
 }
