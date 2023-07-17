@@ -1,4 +1,4 @@
-# Welcome to Church Map
+# Welcome to Guest Map
 
 My dad asked me to create this webapp as a project for our parish at home. 
 This webapp contains 2 screens: a map and a guest sign in form. When a user
