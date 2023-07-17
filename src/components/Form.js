@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { ref, set } from "firebase/database";
 import { db } from "../firebase.js";
 import "./Form.css";
@@ -19,6 +19,12 @@ function Form() {
     const [parish, setParish] = useState('');
 
     function writeData(userId, firstName, lastName, email, city, state, zipcode, country, parish, lat, lng) {
+
+        const date = new Date();
+        const year = date.getFullYear();
+        const day = date.getDate();
+        const month = date.getMonth();
+
         set(ref(db, 'visitors/' + userId), {
           firstName: firstName,
           lastName: lastName,
@@ -29,6 +35,11 @@ function Form() {
           country: country,
           latitude: lat,
           longitude: lng,
+          submissionDate: {
+            day: day,
+            month: month,
+            year: year,
+          },
           parish: parish
         });
     }
@@ -61,6 +72,7 @@ function Form() {
         setEmail('');
         setCity('');
         setState('');
+        setZipcode('');
         setCountry('');
         setParish('');
     }
@@ -70,28 +82,28 @@ function Form() {
         <h1>Guest Sign In</h1>
         <form onSubmit={handleSubmit}>
             <label htmlFor="firstName">First Name:</label>
-            <input onChange={e => setFirstName(e.target.value)} type="text" id="firstName" name="firstName" required />
+            <input onChange={e => setFirstName(e.target.value)} type="text" id="firstName" name="firstName" value={firstName} required />
 
             <label htmlFor="lastName">Last Name:</label>
-            <input onChange={e => setLastName(e.target.value)} type="text" id="lastName" name="lastName" required />
+            <input onChange={e => setLastName(e.target.value)} type="text" id="lastName" name="lastName" value={lastName} required />
 
             <label htmlFor="email">Email:</label>
-            <input onChange={e => setEmail(e.target.value)} type="email" id="email" name="email" required />
+            <input onChange={e => setEmail(e.target.value)} type="email" id="email" name="email" value={email} required />
 
             <label htmlFor="city">City:</label>
-            <input onChange={e => setCity(e.target.value)} type="text" id="city" name="city" required />
+            <input onChange={e => setCity(e.target.value)} type="text" id="city" name="city" value={city} required />
 
             <label htmlFor="state">State:</label>
-            <input onChange={e => setState(e.target.value)} type="text" id="state" name="state" required />
+            <input onChange={e => setState(e.target.value)} type="text" id="state" name="state" value={state} required />
 
             <label htmlFor="zipcode">Zip Code:</label>
-            <input onChange={e => setZipcode(e.target.value)} type="text" id="zipcode" name="zipcode" required />
+            <input onChange={e => setZipcode(e.target.value)} type="text" id="zipcode" name="zipcode" value={zipcode} required />
 
             <label htmlFor="country">Country:</label>
-            <input onChange={e => setCountry(e.target.value)} type="text" id="country" name="country" required />
+            <input onChange={e => setCountry(e.target.value)} type="text" id="country" name="country" value={country} required />
 
             <label htmlFor="parish">Parish:</label>
-            <input onChange={e => setParish(e.target.value)} type="text" id="parish" name="parish" />
+            <input onChange={e => setParish(e.target.value)} type="text" id="parish" name="parish" value={parish} />
 
             <button type="submit"> Submit </button> 
         </form>
