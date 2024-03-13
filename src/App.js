@@ -18,7 +18,7 @@ const Marker = () => {
         width: '8px',
         height: '8px',
         borderRadius: '50%',
-        background: 'red',
+        background: 'blue',
         borderColor: 'black',
         borderWidth: 1
       }}
@@ -74,6 +74,8 @@ function App() {
   if (show) {
     if (mapIndex === 0) {
       content = (
+        <>
+        <h2>Past Year Guests</h2>
         <div key={mapIndex} className="us-map yearly" style={{ height: '500px', width: '75%', margin: "auto"}}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: "AIzaSyBfyZ7xwtZdyg7f8lWUPFE99AJE0VMRpDU" }}
@@ -94,62 +96,71 @@ function App() {
           )}
           </GoogleMapReact>
         </div>
+        </>
       );
     } else if (mapIndex === 1) {
       content = (
+        <>
+        <h2>Past Month Guests</h2>
         <div key={mapIndex} className="us-map monthly" style={{ height: '500px', width: '75%', margin: "auto"}}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyBfyZ7xwtZdyg7f8lWUPFE99AJE0VMRpDU" }}
-          defaultCenter={defaultProps.UnitedStates.center}
-          defaultZoom={defaultProps.UnitedStates.zoom}
-          draggable={false} // Disable map dragging
-          options={{ gestureHandling: 'none' }} // Disable Map Interaction
-        >
-        {data && (
-        Object.keys(data).map((key) => {
-          const curMonth = new Date().getMonth();
-          const curYear = new Date().getFullYear();
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: "AIzaSyBfyZ7xwtZdyg7f8lWUPFE99AJE0VMRpDU" }}
+            defaultCenter={defaultProps.UnitedStates.center}
+            defaultZoom={defaultProps.UnitedStates.zoom}
+            draggable={false} // Disable map dragging
+            options={{ gestureHandling: 'none' }} // Disable Map Interaction
+          >
+          {data && (
+          Object.keys(data).map((key) => {
+            const curMonth = new Date().getMonth();
+            const curYear = new Date().getFullYear();
 
-          if (curMonth === data[key].month && curYear === data[key].year) {
-            return <Marker key={key} lat={data[key].latitude} lng={data[key].longitude} />
-          } else {
-            return null;
-          }
-        })
-        )}
-        </GoogleMapReact>
-      </div>
+            if (curMonth === data[key].month && curYear === data[key].year) {
+              return <Marker key={key} lat={data[key].latitude} lng={data[key].longitude} />
+            } else {
+              return null;
+            }
+          })
+          )}
+          </GoogleMapReact>
+        </div>
+        </>
       );
     } else if (mapIndex === 2) {
       content = (
+        <>
+        <h2>Past Week Guests</h2>
         <div key={mapIndex} className="us-map weekly" style={{ height: '500px', width: '75%', margin: "auto"}}>
-        <GoogleMapReact
-          bootstrapURLKeys={{ key: "AIzaSyBfyZ7xwtZdyg7f8lWUPFE99AJE0VMRpDU" }}
-          defaultCenter={defaultProps.UnitedStates.center}
-          defaultZoom={defaultProps.UnitedStates.zoom}
-          draggable={false} // Disable map dragging
-          options={{ gestureHandling: 'none' }} // Disable Map Interaction
-        >
-        {data && (
-        Object.keys(data).map((key) => {
-          
-          const givenDate = new Date(data[key].year, data[key].month, data[key].day); 
-          const today = new Date();
-          const pastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
-          const isPastWeek = givenDate >= pastWeek && givenDate <= today;
-          
-          if (isPastWeek) {
-            return <Marker key={key} lat={data[key].latitude} lng={data[key].longitude} />
-          } else {
-            return null;
-          }
-        })
-        )}
-        </GoogleMapReact>
-      </div>
+          <GoogleMapReact
+            bootstrapURLKeys={{ key: "AIzaSyBfyZ7xwtZdyg7f8lWUPFE99AJE0VMRpDU" }}
+            defaultCenter={defaultProps.UnitedStates.center}
+            defaultZoom={defaultProps.UnitedStates.zoom}
+            draggable={false} // Disable map dragging
+            options={{ gestureHandling: 'none' }} // Disable Map Interaction
+          >
+          {data && (
+          Object.keys(data).map((key) => {
+            
+            const givenDate = new Date(data[key].year, data[key].month, data[key].day); 
+            const today = new Date();
+            const pastWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+            const isPastWeek = givenDate >= pastWeek && givenDate <= today;
+            
+            if (isPastWeek) {
+              return <Marker key={key} lat={data[key].latitude} lng={data[key].longitude} />
+            } else {
+              return null;
+            }
+          })
+          )}
+          </GoogleMapReact>
+        </div>
+        </>
       );
     } else {
       content = (
+        <>
+        <h2>Today's Guests</h2>
         <div key={mapIndex} className="us-map today" style={{ height: '500px', width: '75%', margin: "auto"}}>
           <GoogleMapReact
             bootstrapURLKeys={{ key: "AIzaSyBfyZ7xwtZdyg7f8lWUPFE99AJE0VMRpDU" }}
@@ -173,6 +184,7 @@ function App() {
           )}
           </GoogleMapReact>
         </div>
+        </>
       );
     }
   } else {

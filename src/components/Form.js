@@ -24,8 +24,11 @@ function Form() {
         const year = date.getFullYear();
         const day = date.getDate();
         const month = date.getMonth();
+        const time = date.getHours();
 
-        set(ref(db, 'visitors/' + userId), {
+        let username = firstName + lastName + month + day + time;
+
+        set(ref(db, 'visitors/' + username), {
           firstName: firstName,
           lastName: lastName,
           email: email,
